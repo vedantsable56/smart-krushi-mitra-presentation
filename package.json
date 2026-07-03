@@ -1,0 +1,16 @@
+{
+  "name": "smart-krushi-jalmitra-presentation",
+  "version": "1.0.0",
+  "description": "Investor presentation website for Smart Krushi Jalmitra Central Controller specification",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y http-server . -p 8080"
+  },
+  "keywords": [
+    "agritech",
+    "presentation",
+    "investor-deck"
+  ],
+  "author": "Antigravity AI",
+  "license": "ISC"
+}
