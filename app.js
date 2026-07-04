@@ -1,7 +1,7 @@
 // Smart Krushi Jalmitra Presentation Website Logic
 // Contains hardware dataset, state management, search/filter, and navigation logic.
 
-// Datasets for Part 1 (Central), Part 2 (Valve), and Part 3 (Sensor Tower)
+// Datasets for Part 1 (Central), Part 2 (Valve), Part 3 (Sensor Tower), and Part 4 (Pump Controller)
 const datasets = {
   central: [
     // CORE COMPONENTS
@@ -58,7 +58,7 @@ const datasets = {
   tower: [
     // CORE SENSOR MODULES & CABLES
     { id: 1, type: "core", category: "accessory", name: "Soil Moisture Sensors", recProduct: "Industrial RS485 Soil Moisture Sensor", recModel: "RS485 Modbus RTU Probe (3x)", recPrice: 4500, recRange: "₹1,500 - ₹3,000 each (x3)", recLink: "https://fabtolab.com", recBuy: "https://fabtolab.com", recRationale: "Provides accurate, corrosion-resistant soil moisture measurement for commercial agriculture.", altProduct: "Capacitive Soil Moisture Sensor V2.0 (x3)", altPrice: 540, altRationale: "Hobby setups or short-duration research projects where sensor degradation is acceptable." },
-    { id: 2, type: "core", category: "accessory", name: "Soil Temperature Sensor", recProduct: "DS18B20 Temp Sensor", recModel: "DS18B20 Waterproof Probe", recPrice: 150, recRange: "₹150 - ₹250", recLink: "https://www.maximintegrated.com", recBuy: "https://robu.in/product/waterproof-digital-temperature-sensor-ds18b20/", recRationale: "Measures soil temperature to improve irrigation and future fertigation recommendations.", altProduct: "Waterproof NTC Temperature Probe", altPrice: 80, altRationale: "Analog thermistor probes calibrated directly in controller firmware." },
+    { id: 2, type: "core", category: "accessory", name: "Soil Temperature Sensor", recProduct: "DS18B20 Temp Sensor", recModel: "DS18B20 Waterproof Probe", recPrice: 150, recRange: "₹150 - ₹250", recLink: "https://www.maximintegrated.com", recBuy: "https://robu.in/product/waterproof-digital-temperature-sensor-ds18b20/", recRationale: "Measures soil temperature to improve irrigation and future fertigation recommendations.", altProduct: "Waterproof NTC Temperature Probe", altPrice: 80, altRationale: "Waterproof NTC probe calibrated directly in controller firmware." },
     { id: 3, type: "core", category: "communication", name: "RS485 Cable", recProduct: "Shielded Twisted Pair RS485 Cable (10m)", recModel: "2-Pair Shielded Cable", recPrice: 400, recRange: "₹40 - ₹80 per meter", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Provides reliable, noise-resistant communication between the Sensor Tower and Valve Controller.", altProduct: "CAT6 Outdoor Cable (10m)", altPrice: 200, altRationale: "Short distance runs under 5m where noise issues are minimal." },
     { id: 4, type: "core", category: "enclosure", name: "UV Resistant Flexible Conduit", recProduct: "Corrugated Conduit (10m)", recModel: "UV Resistant Corrugated Pipe", recPrice: 400, recRange: "₹40 - ₹80 per meter", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Protects sensor cables from sunlight, rodents and physical damage.", altProduct: "PVC Flexible Conduit (10m)", altPrice: 200, altRationale: "Underground routing or sheltered channels not exposed to direct UV rays." },
     // CASING & MOUNTING MATERIALS
@@ -68,11 +68,37 @@ const datasets = {
     { id: 8, type: "cabinet", category: "accessory", name: "Mounting Pole", recProduct: "GI Pipe Mounting Pole", recModel: "1.5m GI Pipe Pole", recPrice: 300, recRange: "₹300 - ₹700", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Provides rigid and durable installation of the Sensor Tower.", altProduct: "PVC Pipe", altPrice: 100, altRationale: "Light installations where soil is stable and wind speeds are low." },
     { id: 9, type: "cabinet", category: "accessory", name: "Mounting Brackets", recProduct: "Stainless Steel Mounting Brackets", recModel: "Stainless Steel Brackets Set", recPrice: 100, recRange: "₹100 - ₹250", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Securely mounts the junction box and conduit to the support pole.", altProduct: "Galvanized Steel Brackets", altPrice: 50, altRationale: "Locations where atmospheric corrosion risks are minimal." },
     { id: 10, type: "cabinet", category: "protection", name: "Surge Protection", recProduct: "SMBJ TVS Diodes (x4)", recModel: "SMBJ12A / SMBJ5.0A (600W)", recPrice: 44, recRange: "₹20 - ₹40 each (x4)", recLink: "https://www.littelfuse.com", recBuy: "https://robu.in/product/smbj12ca-tvs-diode-littelfuse-bidirectional-pack-of-5/", recRationale: "Protects connected sensors from surge voltages and lightning-induced transients.", altProduct: "Generic TVS Diodes (x4)", altPrice: 40, altRationale: "Budget layouts where peak surge thresholds are lower." }
+  ],
+  pump: [
+    // CORE ELECTRONIC MODULES & SENSORS
+    { id: 1, type: "core", category: "processor", name: "Main Microcontroller", recProduct: "ESP32-S3-WROOM-1", recModel: "ESP32-S3-WROOM-1-N8R8", recPrice: 290, recRange: "₹450 - ₹650", recLink: "https://www.espressif.com/en/products/modules/esp32-s3", recBuy: "https://robu.in/product/esp32-s3-wroom-1-n8r8-8mb-flash-8mb-psram-wifi-bluetooth-wireless-module/", recRationale: "Provides processing, Wi-Fi, Bluetooth, OTA support and communication with the Central Controller.", altProduct: "ESP32-WROOM-32", altPrice: 150, altRationale: "Legacy configuration where vector processing is bypassed." },
+    { id: 2, type: "core", category: "communication", name: "LoRa Module", recProduct: "SX1262 LoRa Module", recModel: "Waveshare Core1262-HF", recPrice: 514, recRange: "₹600 - ₹900", recLink: "https://www.semtech.com/products/wireless-rf/lora-connect/sx1262", recBuy: "https://evelta.com/core1262-hf-lora-module-sx1262-onboard/", recRationale: "Provides long-range communication with the Central Controller.", altProduct: "SX1276 LoRa Module (Ra-02)", altPrice: 250, altRationale: "Shorter range setups where older sub-GHz sensitivity limits are acceptable." },
+    { id: 3, type: "core", category: "communication", name: "LoRa Antenna", recProduct: "5 dBi SMA LoRa Antenna", recModel: "868MHz 5dBi High-Gain Antenna", recPrice: 150, recRange: "₹300 - ₹700", recLink: "https://robu.in/product/868mhz-5dbi-high-gain-rubber-antenna/", recBuy: "https://robu.in/product/868mhz-5dbi-high-gain-rubber-antenna/", recRationale: "Improves communication reliability and range.", altProduct: "3 dBi Antenna", altPrice: 100, altRationale: "For small-scale setups located close to the central station antenna." },
+    { id: 4, type: "core", category: "accessory", name: "Current Sensors (3 Phase)", recProduct: "SCT-013 Split Core CT (3x)", recModel: "SCT-013-030 30A (x3)", recPrice: 1140, recRange: "₹350 - ₹600 each", recLink: "https://robu.in", recBuy: "https://robu.in", recRationale: "Measures current in each motor phase for overload protection and motor health analysis.", altProduct: "ACS712 Hall Sensors (3x)", altPrice: 450, altRationale: "In-line current sensing for low-power single-phase fractional HP pumps." },
+    { id: 5, type: "core", category: "accessory", name: "AC Voltage Sensors (3 Phase)", recProduct: "ZMPT101B AC Voltage Sensor (3x)", recModel: "ZMPT101B Active AC Transformer (x3)", recPrice: 387, recRange: "₹150 - ₹250 each", recLink: "https://robu.in/product/zmpt101b-single-phase-ac-active-output-voltage-sensor-module/", recBuy: "https://robu.in/product/zmpt101b-single-phase-ac-active-output-voltage-sensor-module/", recRationale: "Measures line voltage for over-voltage and under-voltage protection.", altProduct: "Voltage Divider Isolation Module (3x)", altPrice: 300, altRationale: "Resistor dividers configured with opto-isolation modules directly on the board." },
+    { id: 6, type: "core", category: "protection", name: "Phase Failure Module", recProduct: "Three Phase Monitoring Relay", recModel: "Selec 600VPR Monitor", recPrice: 1200, recRange: "₹1,500 - ₹3,500", recLink: "https://www.selec.com", recBuy: "https://www.indiamart.com", recRationale: "Protects motors from phase loss and incorrect phase sequence.", altProduct: "Firmware-based Phase Trip Logic", altPrice: 0, altRationale: "Software tracking loop utilizing raw voltage sensor inputs." },
+    { id: 7, type: "core", category: "accessory", name: "Main Flow Meter", recProduct: "Industrial Electromagnetic Flow Meter", recModel: "Modbus RTU Digital Flow Meter", recPrice: 6000, recRange: "₹6,000 - ₹15,000", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Measures total water supplied by the pump and enables leakage detection.", altProduct: "YF-DN25 Hall Flow Sensor", altPrice: 900, altRationale: "Standard Hall flow sensor for low pressure PVC pipe structures." },
+    { id: 8, type: "core", category: "accessory", name: "Borewell Level Sensor", recProduct: "Submersible Level Transmitter", recModel: "Hydrostatic Liquid Level Sensor", recPrice: 4500, recRange: "₹4,000 - ₹8,000", recLink: "https://www.indiamart.com", recBuy: "https://www.indiamart.com", recRationale: "Measures available water in the borewell to prevent dry running.", altProduct: "Ultrasonic Level Sensor", altPrice: 350, altRationale: "For shallow open wells where direct line-of-sight ultrasonic measurements are possible." },
+    { id: 9, type: "core", category: "accessory", name: "Overhead Tank Level Sensor", recProduct: "Waterproof Ultrasonic Sensor", recModel: "JSN-SR04T Waterproof Ultrasonic", recPrice: 350, recRange: "₹1,500 - ₹3,000", recLink: "https://robu.in/product/jsn-sr04t-integrated-ultrasonic-distance-measurement-transducer-sensor-waterproof/", recBuy: "https://robu.in/product/jsn-sr04t-integrated-ultrasonic-distance-measurement-transducer-sensor-waterproof/", recRationale: "Monitors tank level and prevents overflow or dry operation.", altProduct: "Float Level Switch", altPrice: 200, altRationale: "Basic high/low threshold switches." },
+    { id: 10, type: "core", category: "power", name: "Power Supply (SMPS)", recProduct: "230VAC to 12VDC SMPS (24W)", recModel: "12V 2A Regulated SMPS Module", recPrice: 400, recRange: "₹800 - ₹1,500", recLink: "https://www.electronicscomp.com", recBuy: "https://www.electronicscomp.com", recRationale: "Supplies regulated power to the controller electronics.", altProduct: "Mean Well 12V SMPS", altPrice: 1500, altRationale: "High reliability industrial power blocks." },
+    { id: 11, type: "core", category: "power", name: "Buck Converter", recProduct: "12V to 5V Buck Converter", recModel: "XY-3606 IP68 Encapsulated", recPrice: 400, recRange: "₹500 - ₹900", recLink: "https://robu.in", recBuy: "https://robu.in", recRationale: "Supplies stable 5V to the ESP32 and peripherals.", altProduct: "LM2596 Module", altPrice: 60, altRationale: "Low cost buck board for indoor configurations." },
+    { id: 12, type: "core", category: "accessory", name: "RTC Module", recProduct: "DS3231 RTC Module", recModel: "DS3231SN Precision I2C RTC", recPrice: 209, recRange: "₹150 - ₹300", recLink: "https://www.analog.com/en/products/ds3231.html", recBuy: "https://robu.in/product/ds3231-rtc-module-precise-real-time-clock/", recRationale: "Maintains accurate timestamps for logs during power interruptions.", altProduct: "PCF8563 RTC", altPrice: 80, altRationale: "Basic RTC board where clock drift is non-critical." },
+    { id: 13, type: "core", category: "accessory", name: "Active Buzzer", recProduct: "Active Piezo Buzzer", recModel: "SFM-27 Active Buzzer", recPrice: 30, recRange: "₹50 - ₹100", recLink: "https://robu.in/product/sfm-27-active-buzzer-continuous-beep-sound/", recBuy: "https://robu.in/product/sfm-27-active-buzzer-continuous-beep-sound/", recRationale: "Provides local audible alarms during critical faults.", altProduct: "Passive Buzzer", altPrice: 15, altRationale: "Requires PWM configuration to output different frequencies." },
+    // CABINET, SWITCHGEAR & INTEGRATION
+    { id: 14, type: "cabinet", category: "enclosure", name: "Pump Contactor", recProduct: "Schneider Electric Contactor", recModel: "Schneider LC1D09 3-pole Contactor", recPrice: 1400, recRange: "₹1,500 - ₹3,000", recLink: "https://www.se.com/in/en/", recBuy: "https://www.indiamart.com", recRationale: "Safely switches the irrigation pump.", altProduct: "L&T Contactor", altPrice: 1100, altRationale: "Standard L&T B2B motor switches." },
+    { id: 15, type: "cabinet", category: "enclosure", name: "Contactor Driver", recProduct: "Industrial Relay Module", recModel: "5V 1-Channel Isolated Relay Module", recPrice: 60, recRange: "₹300 - ₹600", recLink: "https://robu.in/product/5v-1-channel-isolated-relay-module-with-optocoupler-high-or-low-level-trigger/", recBuy: "https://robu.in/product/5v-1-channel-isolated-relay-module-with-optocoupler-high-or-low-level-trigger/", recRationale: "Allows the ESP32 to safely control the contactor.", altProduct: "MOSFET Driver board", altPrice: 80, altRationale: "Solenoid switching driver." },
+    { id: 16, type: "cabinet", category: "protection", name: "Surge Protection", recProduct: "MOV + TVS Protection", recModel: "Varistor and TVS Diode Block", recPrice: 150, recRange: "₹200 - ₹500", recLink: "https://www.mouser.in", recBuy: "https://www.mouser.in", recRationale: "Protects the controller against lightning and switching surges.", altProduct: "TVS Only Protection", altPrice: 50, altRationale: "Basic transient protection." },
+    { id: 17, type: "cabinet", category: "protection", name: "Fuse Protection", recProduct: "Double Pole 16A MCB", recModel: "Double Pole AC MCB 16A", recPrice: 350, recRange: "₹300 - ₹700", recLink: "https://www.industrybuying.com", recBuy: "https://www.industrybuying.com", recRationale: "Provides electrical protection against short circuits and overloads.", altProduct: "Glass Fuse & Holder Set", altPrice: 60, altRationale: "Basic glass tube fuses." },
+    { id: 18, type: "cabinet", category: "enclosure", name: "Waterproof Enclosure", recProduct: "IP67 Polycarbonate Enclosure", recModel: "300x200x150mm IP67 Box", recPrice: 1500, recRange: "₹1,500 - ₹3,000", recLink: "https://www.indiamart.com/impcat/polycarbonate-enclosure.html", recBuy: "https://www.indiamart.com/impcat/polycarbonate-enclosure.html", recRationale: "Protects electronics from harsh outdoor conditions.", altProduct: "IP65 ABS Enclosure Box", altPrice: 800, altRationale: "Inside sheltered pump housings." },
+    { id: 19, type: "cabinet", category: "enclosure", name: "Cable Glands", recProduct: "M20 Waterproof Glands (10x)", recModel: "M20 IP68 Nylon Glands", recPrice: 150, recRange: "₹50 - ₹80 each", recLink: "https://www.industrybuying.com", recBuy: "https://www.industrybuying.com/cable-glands-generic-ele-cab-42861214/", recRationale: "Provides waterproof cable entry.", altProduct: "Generic Waterproof Cable Glands", altPrice: 100, altRationale: "Housed inside nested panels." },
+    { id: 20, type: "cabinet", category: "enclosure", name: "Terminal Blocks", recProduct: "Phoenix Contact Terminal Blocks", recModel: "Phoenix Din-Rail Terminals (10x)", recPrice: 150, recRange: "₹30 - ₹60 each", recLink: "https://www.mouser.in", recBuy: "https://www.mouser.in", recRationale: "Provides reliable field wiring.", altProduct: "Generic Screw Terminal Blocks", altPrice: 50, altRationale: "Direct screw-terminal strips." },
+    { id: 21, type: "cabinet", category: "accessory", name: "Programming Header", recProduct: "6-pin Programming Header", recModel: "6-pin 2.54mm header", recPrice: 10, recRange: "₹20 - ₹40", recLink: "https://robu.in/product/6-pin-dual-row-male-pin-header-connector-straight-pack-of-5/", recBuy: "https://robu.in/product/6-pin-dual-row-male-pin-header-connector-straight-pack-of-5/", recRationale: "Used for firmware flashing and servicing.", altProduct: "On-board Test Pads", altPrice: 0, altRationale: "Direct test points on PCB for factory assembly jigs." },
+    { id: 22, type: "cabinet", category: "accessory", name: "Status LEDs", recProduct: "Panel Mount IP65 LEDs (4x)", recModel: "10mm Panel Indicator LEDs", recPrice: 100, recRange: "₹20 - ₹40 each", recLink: "https://sharvielectronics.com", recBuy: "https://sharvielectronics.com/product/10mm-metal-led-indicator-light-red-green-blue-yellow-12v/", recRationale: "Indicates Power, Pump Status, LoRa Communication and Fault Conditions.", altProduct: "Standard LEDs (4x)", altPrice: 20, altRationale: "Basic indicator LEDs on internal panels." }
   ]
 };
 
 // App State
-let currentController = "central"; // 'central' | 'valve' | 'tower'
+let currentController = "central"; // 'central' | 'valve' | 'tower' | 'pump'
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
@@ -170,13 +196,13 @@ function updateCostSummaries() {
     totalRec += item.recPrice;
     totalAlt += item.altPrice;
     
-    // Premium version details
+    // Premium/Industrial version details
     if (item.category === "processor") {
       totalPrem += (currentController === "central") ? 15000 : 800; 
     } else if (item.category === "storage") {
       totalPrem += 2500; 
     } else if (item.category === "enclosure") {
-      totalPrem += (currentController === "central") ? 2500 : 1500; 
+      totalPrem += (currentController === "central") ? 2500 : (currentController === "pump" ? 3000 : 1500); 
     } else {
       totalPrem += Math.round(item.recPrice * 1.25);
     }
@@ -191,11 +217,16 @@ function updateCostSummaries() {
     totalRec += 1108; // ₹4,992 to ₹6,100
     totalAlt += 785;  // ₹2,515 to ₹3,300
     totalPrem += 1600; // Premium to ₹8,800
-  } else {
+  } else if (currentController === "tower") {
     // Sensor Tower assembly buffers
-    totalRec += 1266; // ₹6,834 to ₹8,100 (Recommended build total)
-    totalAlt += 140;  // ₹1,660 to ₹1,800 (Budget build total)
-    totalPrem += 600;  // Premium/Industrial total to ₹11,000
+    totalRec += 1266; // ₹6,834 to ₹8,100
+    totalAlt += 140;  // ₹1,660 to ₹1,800
+    totalPrem += 600;  // Premium/Industrial to ₹11,000
+  } else {
+    // Pump Controller assembly buffers
+    totalRec += 60; // ₹19,940 to ₹20,000
+    totalAlt += 1735; // ₹8,265 to ₹10,000
+    totalPrem += 800; // Premium/Industrial to ₹35,000
   }
 
   const costBudgetEl = document.getElementById('cost-budget');
@@ -215,6 +246,7 @@ function updateCostSummaries() {
     let labelPrefix = "CENTRAL CONTROLLER";
     if (currentController === "valve") labelPrefix = "VALVE CONTROLLER UNIT";
     else if (currentController === "tower") labelPrefix = "SENSOR TOWER";
+    else if (currentController === "pump") labelPrefix = "PUMP CONTROLLER";
 
     if (selectedTier === "alt") {
       tierTitle.textContent = `${labelPrefix} BUDGET TOTAL`;
@@ -273,14 +305,14 @@ function renderBOMTable() {
       isAlternative = true;
     } else if (selectedTier === "prem") {
       if (item.category === "processor") {
-        displayProduct = currentController === "central" ? "Raspberry Pi 5 (8GB) / CM5 + Premium Carrier" : "ESP32-S3-WROOM-1 Premium Spec";
-        displayPrice = currentController === "central" ? 15000 : 800;
+        displayProduct = currentController === "central" ? "Raspberry Pi 5 (8GB) / CM5 + Premium Carrier" : (currentController === "pump" ? "ESP32-S3 Premium Spec" : "ESP32-S3-WROOM-1 Premium Spec");
+        displayPrice = currentController === "central" ? 15000 : (currentController === "pump" ? 800 : 800);
       } else if (item.category === "storage") {
         displayProduct = "64GB Industrial SSD (High Temp SLC)";
         displayPrice = 2500;
       } else if (item.category === "enclosure") {
         displayProduct = "Fibox IP67 Polycarbonate Premium Enclosure";
-        displayPrice = (currentController === "central") ? 2500 : 1500;
+        displayPrice = (currentController === "central") ? 2500 : (currentController === "pump" ? 3000 : 1500);
       } else {
         displayPrice = Math.round(item.recPrice * 1.25);
       }
@@ -336,7 +368,7 @@ function setupFilters() {
     });
   });
 
-  // Controller Context Switcher (Central vs Valve vs Tower)
+  // Controller Context Switcher (Central vs Valve vs Tower vs Pump)
   document.querySelectorAll('.context-toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.context-toggle-btn').forEach(b => b.classList.remove('active'));
@@ -348,7 +380,8 @@ function setupFilters() {
       if (metaHeader) {
         if (currentController === "central") metaHeader.textContent = "Part 1: Central Controller";
         else if (currentController === "valve") metaHeader.textContent = "Part 2: Valve Controller";
-        else metaHeader.textContent = "Part 3: Sensor Tower";
+        else if (currentController === "tower") metaHeader.textContent = "Part 3: Sensor Tower";
+        else metaHeader.textContent = "Part 4: Pump Controller";
       }
 
       // Hide or show the external section filter tab depending on controller selection
@@ -467,8 +500,7 @@ function updateCostSlideContext() {
         <div class="tier-feature-item">Digital Local Flow Sensing</div>
       `;
     }
-  } else {
-    // Sensor Tower Context
+  } else if (currentController === "tower") {
     if (cardBudgetText) cardBudgetText.textContent = "Downscaled sensor tower utilizing low-cost capacitive probes and standard PVC poles.";
     if (cardRecText) cardRecText.textContent = "Rigid GI Pipe tower utilizing 3 industrial RS485 soil moisture sensors, digital temp probe and IP67 casing.";
     if (cardPremText) cardPremText.textContent = "Double shielded, heavy-duty industrial tower utilizing high-end multi-parameter probes and steel conduits.";
@@ -498,6 +530,39 @@ function updateCostSlideContext() {
         <div class="tier-feature-item">High-End Double Shielded RS485 Line</div>
         <div class="tier-feature-item">Branded Fibox Junction Enclosure</div>
         <div class="tier-feature-item">Steel-Wire Core Corrugated Conduits</div>
+      `;
+    }
+  } else {
+    // Pump Controller Context
+    if (cardBudgetText) cardBudgetText.textContent = "Basic configuration utilizing ESP32-WROOM, software phase checks, and Hall flow sensor.";
+    if (cardRecText) cardRecText.textContent = "Rugged pump board with hardware phase monitoring relay, split-core CTs, electromagnetic meter, and IP67 housing.";
+    if (cardPremText) cardPremText.textContent = "Industrial switchgear spec incorporating high-end Modbus meters, Mean Well power blocks, and premium waterproof cabinets.";
+
+    if (featuresBudget) {
+      featuresBudget.innerHTML = `
+        <div class="tier-feature-item">ESP32-WROOM-32 MCU</div>
+        <div class="tier-feature-item">ACS712 Hall Current Sensors (3x)</div>
+        <div class="tier-feature-item">YF-DN25 Hall Flow Sensor</div>
+        <div class="tier-feature-item">L&T Contactor + MOSFET driver</div>
+        <div class="tier-feature-item">IP65 ABS Enclosure Casing</div>
+      `;
+    }
+    if (featuresRec) {
+      featuresRec.innerHTML = `
+        <div class="tier-feature-item">ESP32-S3 Dual-Core MCU</div>
+        <div class="tier-feature-item">SCT-013 Split Core CTs (3x)</div>
+        <div class="tier-feature-item">Selec 600VPR Phase Monitoring Relay</div>
+        <div class="tier-feature-item">Industrial Electromagnetic Flow Meter</div>
+        <div class="tier-feature-item">IP67 Polycarbonate Box + Glands</div>
+        <div class="tier-feature-item">Schneider LC1D09 3-pole Contactor</div>
+      `;
+    }
+    if (featuresPrem) {
+      featuresPrem.innerHTML = `
+        <div class="tier-feature-item">Industrial Modbus Flow Meters</div>
+        <div class="tier-feature-item">Mean Well 12V SMPS Power modules</div>
+        <div class="tier-feature-item">Custom Heavy Duty Casing panel</div>
+        <div class="tier-feature-item">Phoenix DIN-rail terminal layout</div>
       `;
     }
   }
@@ -604,15 +669,12 @@ function updateSVGLayout() {
         </g>
       </svg>
     `;
-  } else {
-    // Sensor Tower layout
+  } else if (currentController === "tower") {
     svgViewer.innerHTML = `
       <svg class="diagram-interactive-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Tower Pole outline -->
         <rect x="190" y="50" width="20" height="420" fill="rgba(255, 255, 255, 0.05)" stroke="var(--border-color)" stroke-width="2" />
         <text x="220" y="80" fill="var(--text-muted)" font-size="12" font-weight="700" letter-spacing="1">GI MOUNTING POLE</text>
 
-        <!-- Junction Box -->
         <g class="svg-interactive-part" data-part="jbox">
           <rect x="120" y="120" width="160" height="140" rx="8" fill="rgba(245, 158, 11, 0.05)" stroke="var(--storage)" stroke-width="2" />
           <text x="140" y="160" fill="var(--text-main)" font-size="14" font-weight="700">Junction Box</text>
@@ -621,11 +683,9 @@ function updateSVGLayout() {
           <text x="155" y="220" fill="#fff" font-size="10" font-weight="bold">Surge protection</text>
         </g>
 
-        <!-- Soil line -->
         <line x1="50" y1="360" x2="750" y2="360" stroke="#8B4513" stroke-width="8" stroke-dasharray="15 5" />
         <text x="70" y="390" fill="#8B4513" font-size="14" font-weight="700" letter-spacing="1">SOIL ROOT ZONE DEPTH (15-30CM)</text>
 
-        <!-- Modbus Moisture Sensors -->
         <g class="svg-interactive-part" data-part="moistureSens">
           <rect x="360" y="380" width="100" height="90" rx="8" fill="rgba(16, 185, 129, 0.05)" stroke="var(--primary)" stroke-width="2" />
           <line x1="380" y1="440" x2="380" y2="460" stroke="var(--primary)" stroke-width="3" />
@@ -653,15 +713,65 @@ function updateSVGLayout() {
           <text x="635" y="425" fill="var(--text-muted)" font-size="9">Moisture 3 (End)</text>
         </g>
 
-        <!-- Soil Temp Sensor -->
         <g class="svg-interactive-part" data-part="tempSens">
           <circle cx="540" cy="330" r="25" fill="rgba(138, 43, 226, 0.05)" stroke="var(--processor)" stroke-width="2" />
           <text x="528" y="334" fill="var(--text-main)" font-size="10" font-weight="700">Temp</text>
         </g>
 
-        <!-- Connecting conduit line -->
         <path d="M 200 260 L 200 360" stroke="rgba(255,255,255,0.15)" stroke-width="12" stroke-linecap="round" />
         <text x="215" y="310" fill="var(--text-muted)" font-size="10">UV Corrugated Conduit</text>
+      </svg>
+    `;
+  } else {
+    // Pump Controller layout
+    svgViewer.innerHTML = `
+      <svg class="diagram-interactive-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="30" width="700" height="440" rx="20" fill="rgba(11, 15, 25, 0.6)" stroke="var(--border-color)" stroke-width="4" stroke-dasharray="10 5" />
+        <text x="70" y="60" fill="var(--text-muted)" font-size="14" font-weight="700" letter-spacing="1">IP67 PUMP & WATER MANAGEMENT PANEL</text>
+
+        <g class="svg-interactive-part" data-part="esp">
+          <rect x="100" y="100" width="220" height="150" rx="12" fill="rgba(138, 43, 226, 0.05)" stroke="var(--processor)" stroke-width="2" />
+          <text x="120" y="135" fill="var(--text-main)" font-size="15" font-weight="700">ESP32-S3 MCU</text>
+          <text x="120" y="155" fill="var(--text-muted)" font-size="11">Dual-core processing logic</text>
+          <text x="120" y="175" fill="var(--text-muted)" font-size="11">safety checks engine</text>
+        </g>
+
+        <g class="svg-interactive-part" data-part="phase">
+          <rect x="350" y="100" width="180" height="150" rx="12" fill="rgba(245, 158, 11, 0.05)" stroke="var(--storage)" stroke-width="2" />
+          <text x="365" y="135" fill="var(--text-main)" font-size="15" font-weight="700">Phase Monitor</text>
+          <text x="365" y="155" fill="var(--text-muted)" font-size="11">Selec 600VPR relay</text>
+          <rect x="365" y="180" width="150" height="40" rx="4" fill="rgba(245, 158, 11, 0.2)" />
+          <text x="375" y="205" fill="#fff" font-size="11" font-weight="bold">3 Phase protection</text>
+        </g>
+
+        <g class="svg-interactive-part" data-part="contactor">
+          <rect x="560" y="100" width="160" height="150" rx="12" fill="rgba(239, 68, 68, 0.05)" stroke="var(--power)" stroke-width="2" />
+          <text x="575" y="135" fill="var(--text-main)" font-size="15" font-weight="700">Contactor</text>
+          <text x="575" y="155" fill="var(--text-muted)" font-size="11">Schneider LC1D09</text>
+          <rect x="575" y="180" width="130" height="40" rx="4" fill="rgba(239, 68, 68, 0.2)" />
+          <text x="585" y="205" fill="#fff" font-size="11" font-weight="bold">9A AC-3 Power</text>
+        </g>
+
+        <g class="svg-interactive-part" data-part="ctSensors">
+          <rect x="100" y="300" width="180" height="120" rx="12" fill="rgba(16, 185, 129, 0.05)" stroke="var(--primary)" stroke-width="2" />
+          <text x="115" y="335" fill="var(--text-main)" font-size="14" font-weight="700">SCT-013 CTs (3x)</text>
+          <text x="115" y="355" fill="var(--text-muted)" font-size="11">Amperage metrics</text>
+          <text x="115" y="375" fill="var(--text-muted)" font-size="11">overload prevention</text>
+        </g>
+
+        <g class="svg-interactive-part" data-part="levelSensors">
+          <rect x="310" y="300" width="220" height="120" rx="12" fill="rgba(59, 130, 246, 0.05)" stroke="var(--communication)" stroke-width="2" />
+          <text x="325" y="335" fill="var(--text-main)" font-size="14" font-weight="700">Level Sensors</text>
+          <text x="325" y="355" fill="var(--text-muted)" font-size="11">Borewell (Hydrostatic)</text>
+          <text x="325" y="375" fill="var(--text-muted)" font-size="11">Tank (Ultrasonic)</text>
+        </g>
+
+        <g class="svg-interactive-part" data-part="flowSens">
+          <rect x="560" y="300" width="160" height="120" rx="12" fill="rgba(59, 130, 246, 0.05)" stroke="var(--communication)" stroke-width="2" />
+          <text x="575" y="335" fill="var(--text-main)" font-size="14" font-weight="700">Flow Meter</text>
+          <text x="575" y="355" fill="var(--text-muted)" font-size="11">Electromagnetic</text>
+          <text x="575" y="375" fill="var(--text-muted)" font-size="11">Modbus RTU line</text>
+        </g>
       </svg>
     `;
   }
@@ -700,7 +810,18 @@ function animateSVGDiagram() {
     tempSens: { title: "DS18B20 Temp Probe", desc: "1-Wire waterproof digital probe tracking soil temperature lines at active root levels.", price: "₹150" }
   };
 
-  const activeDetails = (currentController === "central") ? centralDetails : (currentController === "valve" ? valveDetails : towerDetails);
+  const pumpDetails = {
+    esp: { title: "ESP32-S3 Processor", desc: "High-speed controller running motor safety check loop, flow calculation, and contactor switching logic.", price: "₹290" },
+    phase: { title: "Phase Monitor Relay", desc: "Selec 600VPR relay protection module securing the motor from loss of phase or sequence reversals.", price: "₹1,200" },
+    contactor: { title: "Schneider Contactor", desc: "Schneider LC1D09 3-pole 9A AC-3 contactor switching the pump power lines safely.", price: "₹1,400" },
+    ctSensors: { title: "Split-Core Current Sensors", desc: "3x SCT-013 non-invasive current transformers measuring pump phase currents.", price: "₹1,140" },
+    levelSensors: { title: "Borewell & Tank Sensors", desc: "Hydrostatic pressure sensor tracks dry well risk; JSN-SR04T checks tank volume levels.", price: "₹4,850" },
+    flowSens: { title: "Electromagnetic Flow Meter", desc: "Industrial digital flow meter tracking water output and detecting downstream pipeline leaks.", price: "₹6,000" }
+  };
+
+  const activeDetails = (currentController === "central") ? centralDetails : 
+                        (currentController === "valve" ? valveDetails : 
+                        (currentController === "tower" ? towerDetails : pumpDetails));
 
   parts.forEach(part => {
     part.addEventListener('mouseenter', () => {
